@@ -1,0 +1,386 @@
+[
+  {
+    "id": "F-1.1",
+    "phase": 1,
+    "category": "environment",
+    "description": "项目目录结构完整",
+    "steps": [
+      "检查 src/inspection_lora/ 目录存在",
+      "检查 configs/ 包含 lora_config.yaml 和 eval_config.yaml",
+      "检查 data/templates/, data/generated/, data/processed/ 存在",
+      "检查 scripts/ 和 openspec/ 存在"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-1.2",
+    "phase": 1,
+    "category": "environment",
+    "description": "pyproject.toml 和 requirements.txt 配置正确",
+    "steps": [
+      "pyproject.toml 包含 mlx>=0.22, mlx-lm>=0.22 等依赖",
+      "requires-python >= 3.11",
+      "requirements.txt 与 pyproject.toml 一致"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-1.3",
+    "phase": 1,
+    "category": "environment",
+    "description": "Python 虚拟环境可创建，依赖可安装",
+    "steps": [
+      "python -m venv .venv 成功",
+      "pip install -r requirements.txt 无报错",
+      "pip install -e '.[dev]' 无报错"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-1.4",
+    "phase": 1,
+    "category": "environment",
+    "description": "Qwen2.5-1.5B-Instruct 模型可下载并加载",
+    "steps": [
+      "huggingface-hub 下载模型成功",
+      "mlx_lm.load 加载模型无报错",
+      "模型可生成文本"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-1.5",
+    "phase": 1,
+    "category": "environment",
+    "description": "LoRA 训练配置文件格式正确且参数合理",
+    "steps": [
+      "YAML 可正常解析",
+      "包含 model, lora_parameters 等必要字段",
+      "rank=16, alpha=32, target_modules 覆盖 Qwen2.5 架构"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-1.6",
+    "phase": 1,
+    "category": "environment",
+    "description": "MLX LoRA 训练 pipeline 可用 dummy 数据跑通",
+    "steps": [
+      "create_dummy_data.py 生成 dummy 数据",
+      "mlx_lm.lora --config configs/lora_config.yaml 少量 iters 无报错",
+      "输出 adapter 权重到 outputs/adapters/"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.1",
+    "phase": 2,
+    "category": "data",
+    "description": "Prometheus 指标解析器 metrics_parser.py 功能完整",
+    "steps": [
+      "format_prometheus_line 格式化单条指标",
+      "format_prometheus_block 格式化多条指标",
+      "format_baselines_block 格式化基线数据",
+      "format_input_block 组装完整输入文本",
+      "parse_prometheus_line/block 解析指标文本",
+      "所有函数无语法错误"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.2",
+    "phase": 2,
+    "category": "data",
+    "description": "Prompt 构建器 prompt_builder.py 功能完整",
+    "steps": [
+      "build_user_prompt 构建用户输入",
+      "build_assistant_response 支持 6 种 scenario_type",
+      "build_chat_messages 构建 mlx-lm chat messages 格式",
+      "所有函数无语法错误"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.3.1",
+    "phase": 2,
+    "category": "data",
+    "description": "CPU 指标模板引擎完整（正常 + 5 种异常）",
+    "steps": [
+      "gen_cpu_normal 正常场景",
+      "gen_cpu_spike 突增场景",
+      "gen_cpu_sustained_high 持续偏高",
+      "gen_cpu_iowait_high IO等待偏高",
+      "gen_cpu_system_high 系统态偏高",
+      "gen_cpu_load_mismatch 负载不匹配",
+      "所有生成器返回合法 ScenarioConfig 且无语法错误"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.3.2",
+    "phase": 2,
+    "category": "data",
+    "description": "内存指标模板引擎完整（正常 + 4 种异常）",
+    "steps": [
+      "gen_memory_normal 正常场景",
+      "gen_memory_low_available 可用不足",
+      "gen_memory_leak_trend 泄漏趋势",
+      "gen_memory_swap_pressure swap压力",
+      "gen_memory_oom_risk OOM风险",
+      "所有生成器返回合法 ScenarioConfig 且无语法错误"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.3.3",
+    "phase": 2,
+    "category": "data",
+    "description": "磁盘指标模板引擎完整（正常 + 4 种异常）",
+    "steps": [
+      "gen_disk_normal 正常场景",
+      "gen_disk_space_low 空间不足",
+      "gen_disk_io_saturation IO饱和",
+      "gen_disk_inode_exhaustion inode耗尽",
+      "gen_disk_write_latency 写延迟偏高",
+      "所有生成器返回合法 ScenarioConfig 且无语法错误"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.3.4",
+    "phase": 2,
+    "category": "data",
+    "description": "网络指标模板引擎完整（正常 + 3 种异常）",
+    "steps": [
+      "gen_network_normal 正常场景",
+      "gen_network_traffic_spike 流量突增",
+      "gen_network_asymmetric 收发不对称",
+      "gen_network_bandwidth_saturation 带宽饱和",
+      "所有生成器返回合法 ScenarioConfig 且无语法错误"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.3.5",
+    "phase": 2,
+    "category": "data",
+    "description": "多指标组合模板引擎完整（6 种关联场景）",
+    "steps": [
+      "gen_cpu_io_correlation CPU+IO关联",
+      "gen_memory_swap_cascade 内存+swap级联",
+      "gen_cpu_memory_load CPU+内存+负载",
+      "gen_disk_network_backup 磁盘+网络备份",
+      "gen_full_stack_degradation 全栈退化",
+      "gen_load_cpu_divergence 负载与CPU背离",
+      "所有生成器返回合法 ScenarioConfig 且无语法错误"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.4",
+    "phase": 2,
+    "category": "data",
+    "description": "数据合成脚本 generate_data.py 可正常运行",
+    "steps": [
+      "python scripts/generate_data.py --count 100 无报错",
+      "输出 data/generated/raw_data.jsonl",
+      "每条记录含 messages 数组",
+      "场景类型分布符合预期"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.5",
+    "phase": 2,
+    "category": "data",
+    "description": "数据质量过滤脚本 filter_data.py 可正常运行",
+    "steps": [
+      "JSON 格式校验正常",
+      "Schema 完整性检查通过",
+      "内容合理性检查通过",
+      "去重功能正常",
+      "输出过滤报告"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.6",
+    "phase": 2,
+    "category": "data",
+    "description": "数据集切分脚本 split_data.py 可正常运行",
+    "steps": [
+      "输出 train.jsonl, valid.jsonl, test.jsonl",
+      "切分比例约 80/10/10",
+      "数据已打乱顺序"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.7",
+    "phase": 2,
+    "category": "data",
+    "description": "完整数据流水线端到端跑通，产出 >= 2000 条",
+    "steps": [
+      "generate_data.py --count 2000 成功",
+      "filter_data.py 过滤后数据充足",
+      "split_data.py 切分完成",
+      "抽检数据质量合格"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.8",
+    "phase": 2,
+    "category": "data",
+    "description": "data_utils.py 基础工具模块功能完整",
+    "steps": [
+      "MetricSample/AnomalyFinding/ScenarioConfig 定义正确",
+      "random_instance/time_range/baseline_desc 正常",
+      "compute_deviation 计算正确",
+      "severity_from_deviation 判定正确",
+      "format_bytes/percent 格式化正确",
+      "write_jsonl/read_jsonl 读写正常"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-2.9",
+    "phase": 2,
+    "category": "data",
+    "description": "模板注册表 __init__.py 正确注册所有生成器",
+    "steps": [
+      "TEMPLATE_REGISTRY 包含 6 种 scenario_type",
+      "每种类型注册了对应生成器",
+      "generate_scenarios 可按类型和数量生成",
+      "所有 import 无报错"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-3.1",
+    "phase": 3,
+    "category": "training",
+    "description": "MLX LoRA 训练可通过 mlx_lm.lora 启动",
+    "steps": [
+      "mlx_lm.lora --config configs/lora_config.yaml 可运行",
+      "模型加载成功",
+      "LoRA adapter 应用成功",
+      "训练循环正常，loss 输出正常"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-3.2",
+    "phase": 3,
+    "category": "training",
+    "description": "数据加载器正确转换 JSONL 为 MLX 训练格式",
+    "steps": [
+      "mlx_lm 可读取 data/processed/train.jsonl",
+      "chat messages 格式正确 tokenize",
+      "mask_prompt 只计算 assistant 部分 loss"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-3.3",
+    "phase": 3,
+    "category": "training",
+    "description": "用 MVP 数据集完成首次训练，loss 收敛",
+    "steps": [
+      "2000 条数据训练 1000 iters",
+      "训练 loss 下降",
+      "验证 loss 下降",
+      "无 OOM 错误",
+      "adapter 权重保存到 outputs/adapters/"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-3.4",
+    "phase": 3,
+    "category": "training",
+    "description": "LoRA 权重合并脚本可将 adapter 合并到基座模型",
+    "steps": [
+      "mlx_lm.fuse 或 merge_lora.py 运行成功",
+      "合并后模型可加载",
+      "合并后模型可生成文本"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-3.5",
+    "phase": 3,
+    "category": "training",
+    "description": "超参调优：至少 3 组实验（rank 8/16/32）",
+    "steps": [
+      "rank=8 训练完成并记录 loss",
+      "rank=16 训练完成并记录 loss",
+      "rank=32 训练完成并记录 loss",
+      "对比选择最优配置"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-4.1",
+    "phase": 4,
+    "category": "evaluation",
+    "description": "推理脚本 inference.py 可加载 LoRA 并生成结构化输出",
+    "steps": [
+      "加载 adapter 权重成功",
+      "输入指标文本可生成巡检结果",
+      "输出包含异常发现、判断、建议",
+      "支持单条和批量输入"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-4.2",
+    "phase": 4,
+    "category": "evaluation",
+    "description": "评估脚本 evaluate.py 可计算各项指标",
+    "steps": [
+      "计算异常检测 F1",
+      "计算数值准确率",
+      "计算结构完整性评分",
+      "输出评估报告"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-4.3",
+    "phase": 4,
+    "category": "evaluation",
+    "description": "test 集评估达到 MVP 指标",
+    "steps": [
+      "F1 > 0.75",
+      "数值准确率 > 90%",
+      "误报率 < 15%"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-4.4",
+    "phase": 4,
+    "category": "evaluation",
+    "description": "基座模型 vs 微调模型对比评估",
+    "steps": [
+      "相同 test 集评估两个模型",
+      "微调后 F1 提升 > +0.2",
+      "生成对比报告"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F-4.5",
+    "phase": 4,
+    "category": "evaluation",
+    "description": "端到端测试：10 个真实场景验证",
+    "steps": [
+      "构造 10 个真实 Prometheus 指标输入",
+      "运行推理获取输出",
+      "人工评估质量",
+      "平均评分 > 3.0/5.0"
+    ],
+    "passes": false
+  }
+]

@@ -1,0 +1,63 @@
+# mlx-lm LoRA 训练配置
+# 用法: mlx_lm.lora --config configs/lora_config.yaml
+
+# 模型
+model: "Qwen/Qwen2.5-1.5B-Instruct"
+
+# 训练模式
+train: true
+fine_tune_type: lora
+
+# 数据路径 (包含 train.jsonl, valid.jsonl, test.jsonl)
+data: "data/processed"
+
+# 随机种子
+seed: 42
+
+# LoRA 参数
+lora_parameters:
+  keys:
+    - "self_attn.q_proj"
+    - "self_attn.k_proj"
+    - "self_attn.v_proj"
+    - "self_attn.o_proj"
+    - "mlp.gate_proj"
+    - "mlp.up_proj"
+    - "mlp.down_proj"
+  rank: 16
+  scale: 2.0           # alpha / rank = 32 / 16
+  dropout: 0.05
+
+# 微调层数 (-1 = 全部层)
+num_layers: -1
+
+# 训练超参
+batch_size: 2
+iters: 1000
+learning_rate: 2.0e-4
+steps_per_report: 10
+steps_per_eval: 100
+val_batches: 25
+grad_accumulation_steps: 8
+max_seq_length: 2048
+
+# 学习率调度
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-7
+  arguments: [2.0e-4, 1000, 1.0e-7]
+
+# Adapter 保存
+adapter_path: "outputs/adapters"
+save_every: 200
+
+# 梯度检查点 (省内存)
+grad_checkpoint: true
+
+# 评估
+test: false
+test_batches: 50
+
+# Prompt masking (chat 格式建议开启)
+mask_prompt: true

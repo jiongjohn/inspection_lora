@@ -1,0 +1,10 @@
+# 评估配置
+# 用法: mlx_lm.lora --config configs/eval_config.yaml
+
+model: "Qwen/Qwen2.5-1.5B-Instruct"
+train: false
+test: true
+data: "data/processed"
+adapter_path: "outputs/adapters"
+test_batches: 100
+max_seq_length: 2048
