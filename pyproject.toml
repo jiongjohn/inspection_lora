@@ -1,0 +1,33 @@
+[project]
+name = "inspection-lora"
+version = "0.1.0"
+description = "Prometheus 指标数据 AI 巡检 - LoRA 微调项目"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mlx>=0.22.0",
+    "mlx-lm>=0.22.0",
+    "transformers>=4.45.0",
+    "datasets>=3.0.0",
+    "pyyaml>=6.0",
+    "jsonlines>=4.0.0",
+    "numpy>=1.26.0",
+    "huggingface-hub>=0.25.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
