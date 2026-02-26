@@ -241,3 +241,53 @@ node_cpu_seconds_total{mode=\"user\"}: 35.0
 node_cpu_seconds_total{mode=\"system\"}: 8.0
 node_cpu_seconds_total{mode=\"idle\"}: 57.0"
 ```
+
+---
+
+## 附录: 线上 Prometheus 巡检
+
+通过 MCP 连接线上 Prometheus，自动采集指标并调用微调模型分析。
+
+### 前置条件
+
+1. Prometheus MCP Server 已启动:
+```bash
+docker run -d \
+  --name prometheus-mcp-server \
+  --restart=always \
+  -e PROMETHEUS_URL="http://your-prometheus:9090" \
+  -e PROMETHEUS_MCP_SERVER_TRANSPORT="sse" \
+  -p 11909:8080 \
+  ghcr.io/pab1it0/prometheus-mcp-server:latest
+```
+
+2. 微调模型 API 服务已启动:
+```bash
+python -m mlx_lm server \
+  --model Qwen/Qwen2.5-1.5B-Instruct \
+  --adapter-path outputs/adapters \
+  --host 0.0.0.0 --port 8080
+```
+
+3. 安装额外依赖:
+```bash
+pip install "mcp[cli]" openai
+```
+
+### 执行巡检
+
+```bash
+# 巡检所有 node_exporter 实例
+python scripts/inspect_prometheus.py
+
+# 指定实例
+python scripts/inspect_prometheus.py --instance "node-web-01:9100"
+
+# 自定义 MCP 和模型地址
+python scripts/inspect_prometheus.py \
+  --mcp-url http://your-mcp-host:11909/sse \
+  --llm-url http://localhost:8080/v1 \
+  --output outputs/inspection_report.json
+```
+
+**输出:** 终端打印巡检报告 + JSON 结果保存至 `outputs/inspection_report.json`
