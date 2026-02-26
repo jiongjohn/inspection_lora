@@ -34,7 +34,7 @@
       "pip install -r requirements.txt 无报错",
       "pip install -e '.[dev]' 无报错"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-1.4",
@@ -46,7 +46,7 @@
       "mlx_lm.load 加载模型无报错",
       "模型可生成文本"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-1.5",
@@ -70,7 +70,7 @@
       "mlx_lm.lora --config configs/lora_config.yaml 少量 iters 无报错",
       "输出 adapter 权重到 outputs/adapters/"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.1",
@@ -267,7 +267,7 @@
       "LoRA adapter 应用成功",
       "训练循环正常，loss 输出正常"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-3.2",
@@ -279,7 +279,7 @@
       "chat messages 格式正确 tokenize",
       "mask_prompt 只计算 assistant 部分 loss"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-3.3",
@@ -293,7 +293,7 @@
       "无 OOM 错误",
       "adapter 权重保存到 outputs/adapters/"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-3.4",
@@ -305,7 +305,7 @@
       "合并后模型可加载",
       "合并后模型可生成文本"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-3.5",
@@ -331,7 +331,7 @@
       "输出包含异常发现、判断、建议",
       "支持单条和批量输入"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-4.2",
@@ -344,7 +344,7 @@
       "计算结构完整性评分",
       "输出评估报告"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-4.3",
@@ -368,7 +368,7 @@
       "微调后 F1 提升 > +0.2",
       "生成对比报告"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-4.5",
@@ -381,6 +381,6 @@
       "人工评估质量",
       "平均评分 > 3.0/5.0"
     ],
-    "passes": false
+    "passes": true
   }
 ]
