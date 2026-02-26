@@ -152,7 +152,7 @@ samples = [
 ]
 
 # 创建输出目录
-output_dir = Path("data/processed")
+output_dir = Path("data/dummy")
 output_dir.mkdir(parents=True, exist_ok=True)
 
 # 分割数据集
