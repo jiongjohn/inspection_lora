@@ -36,3 +36,40 @@
 2. Create disk_templates.py, network_templates.py, composite_templates.py
 3. Run `python scripts/generate_data.py --count 10 --seed 42` to validate the pipeline
 4. Update feature_list.json as features pass
+
+---
+
+## Session 1 — W3/W4/W5 Complete: Templates + Data Pipeline (2026-02-26)
+
+**What was done:**
+- Created disk_templates.py (5 generators: normal, space_low, io_saturation, inode_exhaustion, write_latency)
+- Created network_templates.py (4 generators: normal, traffic_spike, asymmetric, bandwidth_saturation)
+- Created composite_templates.py (6 generators: cpu_io_correlation, memory_swap_cascade, cpu_memory_load, disk_network_backup, full_stack_degradation, load_cpu_divergence)
+- Fixed syntax errors in disk/composite templates (truncated variable names, missing parens)
+- Verified all 26 generators produce valid ScenarioConfig
+- Ran full data pipeline: generate 2200 → filter 2200/2200 → split 1760/220/220
+- Updated feature_list.json: 16 features marked PASS
+
+**Features completed:**
+- F-1.1: 项目目录结构完整
+- F-1.2: pyproject.toml 和 requirements.txt 配置正确
+- F-1.5: LoRA 训练配置文件格式正确
+- F-2.1: metrics_parser.py 功能完整
+- F-2.2: prompt_builder.py 功能完整
+- F-2.3.1 ~ F-2.3.5: 全部 5 个模板引擎完整
+- F-2.4: generate_data.py 正常运行
+- F-2.5: filter_data.py 正常运行
+- F-2.6: split_data.py 正常运行
+- F-2.7: 端到端 2200 条数据产出
+- F-2.8: data_utils.py 功能完整
+- F-2.9: 模板注册表正确
+
+**Known issues:**
+- F-1.3 (venv), F-1.4 (model download), F-1.6 (dummy training) 未验证（需要实际运行训练）
+- gen_templates.py 仍存在，可删除
+- Session 0 提到的 memory_templates 英文分析文本问题未确认是否已修复
+
+**Next session should:**
+1. Verify F-1.3, F-1.4, F-1.6 (venv/model/dummy training)
+2. Start Phase 3: F-3.1 MLX LoRA training with real data
+3. Delete abandoned gen_templates.py

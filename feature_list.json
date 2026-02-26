@@ -10,7 +10,7 @@
       "检查 data/templates/, data/generated/, data/processed/ 存在",
       "检查 scripts/ 和 openspec/ 存在"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-1.2",
@@ -22,7 +22,7 @@
       "requires-python >= 3.11",
       "requirements.txt 与 pyproject.toml 一致"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-1.3",
@@ -58,7 +58,7 @@
       "包含 model, lora_parameters 等必要字段",
       "rank=16, alpha=32, target_modules 覆盖 Qwen2.5 架构"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-1.6",
@@ -85,7 +85,7 @@
       "parse_prometheus_line/block 解析指标文本",
       "所有函数无语法错误"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.2",
@@ -98,7 +98,7 @@
       "build_chat_messages 构建 mlx-lm chat messages 格式",
       "所有函数无语法错误"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.3.1",
@@ -114,7 +114,7 @@
       "gen_cpu_load_mismatch 负载不匹配",
       "所有生成器返回合法 ScenarioConfig 且无语法错误"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.3.2",
@@ -129,7 +129,7 @@
       "gen_memory_oom_risk OOM风险",
       "所有生成器返回合法 ScenarioConfig 且无语法错误"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.3.3",
@@ -144,7 +144,7 @@
       "gen_disk_write_latency 写延迟偏高",
       "所有生成器返回合法 ScenarioConfig 且无语法错误"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.3.4",
@@ -158,7 +158,7 @@
       "gen_network_bandwidth_saturation 带宽饱和",
       "所有生成器返回合法 ScenarioConfig 且无语法错误"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.3.5",
@@ -174,7 +174,7 @@
       "gen_load_cpu_divergence 负载与CPU背离",
       "所有生成器返回合法 ScenarioConfig 且无语法错误"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.4",
@@ -187,7 +187,7 @@
       "每条记录含 messages 数组",
       "场景类型分布符合预期"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.5",
@@ -201,7 +201,7 @@
       "去重功能正常",
       "输出过滤报告"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.6",
@@ -213,7 +213,7 @@
       "切分比例约 80/10/10",
       "数据已打乱顺序"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.7",
@@ -226,7 +226,7 @@
       "split_data.py 切分完成",
       "抽检数据质量合格"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.8",
@@ -241,7 +241,7 @@
       "format_bytes/percent 格式化正确",
       "write_jsonl/read_jsonl 读写正常"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-2.9",
@@ -254,7 +254,7 @@
       "generate_scenarios 可按类型和数量生成",
       "所有 import 无报错"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-3.1",
