@@ -318,7 +318,7 @@
       "rank=32 训练完成并记录 loss",
       "对比选择最优配置"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F-4.1",
